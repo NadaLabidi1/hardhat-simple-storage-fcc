@@ -10,7 +10,7 @@ describe("SimpleStorage", () => {
 
     it("Should start with a favorite number of 0", async function () {
         const currentValue = await simpleStorage.retrieve()
-        const expectedValue = "1"
+        const expectedValue = "0"
         // assert
         // expect
         assert.equal(currentValue.toString(), expectedValue)
