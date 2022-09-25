@@ -11,10 +11,18 @@ async function main() {
     await simpleStorage.deployed()
     console.log(`deployed contract to: ${simpleStorage.address}`)
 
-    if (network.config.chainId === 4 && process.env.ETHERSCAN_API_KEY) {
+    if (network.config.chainId === 5 && process.env.ETHERSCAN_API_KEY) {
+        console.log("waiting for blocks txes ...")
         await simpleStorage.deployTransaction.wait(6)
         await verify(simpleStorage.address, [])
     }
+
+    const currentValue = await simpleStorage.retrieve()
+    console.log(`current value is : ${currentValue}`)
+    const transactionResponse = await simpleStorage.store(7)
+    await transactionResponse.wait(1)
+    const updateValue = await simpleStorage.retrieve()
+    console.log(`updated value : ${updateValue}`)
 }
 async function verify(contractAddress, args) {
     console.log("Verifying Contract...")
